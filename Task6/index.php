@@ -14,7 +14,6 @@ try {
     $account1->withdraw(30);
     echo "Баланс після зняття: " . $account1->getBalance() . " USD\n";
 
-    // Тестування SavingsAccount з відсотковою ставкою
     $savingsAccount = new SavingsAccount("USD", 200);
     $savingsAccount->applyInterest();
     echo "Баланс після нарахування відсотків: " . $savingsAccount->getBalance() . " USD\n";
