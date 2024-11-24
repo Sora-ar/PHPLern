@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація</title>
+</head>
+<body>
+<h2>Реєстрація</h2>
+<form method="POST" id="registerForm">
+    <input type="text" name="username" id="username" placeholder="Ім'я користувача" required>
+    <input type="email" name="email" id="email" placeholder="Електронна пошта" required>
+    <input type="password" name="password" id="password" placeholder="Пароль" required>
+    <input type="password" name="confirm_password" id="confirm_password" placeholder="Підтвердження пароля" required>
+    <button type="submit">Зареєструватися</button>
+</form>
+<script>
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let username = document.getElementById('username').value;
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let confirm_password = document.getElementById('confirm_password').value;
+
+        if (password !== confirm_password) {
+            alert('Паролі не співпадають');
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append('action', 'register');
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+
+        fetch('server_register.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data === 'success') {
+                    alert('Реєстрація успішна!');
+                    window.location.href = 'login.html';
+                } else if (data === 'user_exists') {
+                    alert('Користувач з таким email вже існує.');
+                } else if (data === 'invalid_email_format') {
+                    alert('Неправильний формат електронної пошти.');
+                } else if (data === 'weak_password') {
+                    alert('Пароль занадто слабкий. Використовуйте щонайменше 8 символів, з великими і маленькими літерами та цифрами.');
+                } else if (data === 'db_connection_error') {
+                    alert('Помилка підключення до бази даних.');
+                } else if (data === 'registration_failed') {
+                    alert('Помилка при збереженні користувача в базі даних.');
+                } else {
+                    alert('Невідома помилка: ' + data);
+                }
+            })
+            .catch(error => {
+                alert('Помилка підключення до сервера. Спробуйте пізніше.');
+                console.error('Помилка:', error);
+            });
+    });
+</script>
+</body>
+</html>

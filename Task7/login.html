@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вхід</title>
+</head>
+<body>
+<h2>Вхід</h2>
+<form method="POST" id="loginForm">
+  <input type="password" name="password" id="password" placeholder="Пароль" required>
+  <button type="submit">Увійти</button>
+</form>
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let usernameOrEmail = document.getElementById('username_or_email').value;
+    let password = document.getElementById('password').value;
+
+    let formData = new FormData();
+    formData.append('action', 'login');
+    formData.append('username_or_email', usernameOrEmail);
+    formData.append('password', password);
+
+    fetch('server_login.php', {
+      method: 'POST',
+      body: formData
+    })
+            .then(response => response.text())
+            .then(data => {
+              if (data === 'success') {
+                alert('Вхід успішний!');
+                window.location.href = 'welcome.php';
+              } else {
+                alert('Невірні облікові дані.');
+              }
+            });
+  });
+</script>
+</body>
+</html>
