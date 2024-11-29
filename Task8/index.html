@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API: Нова Пошта</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+<h1>Оформлення замовлення</h1>
+<form id="orderForm">
+    <label for="orderNumber">Номер замовлення:</label>
+    <input type="text" id="orderNumber" name="orderNumber" required>
+
+    <label for="weight">Вага замовлення (кг):</label>
+    <input type="number" id="weight" name="weight" required>
+
+    <label for="city">Місто:</label>
+    <select id="city" name="city" required>
+        <option value="">Оберіть місто</option>
+    </select>
+
+    <label for="deliveryType">Тип доставки:</label>
+    <select id="deliveryType" name="deliveryType" required>
+        <option value="branch">Відділення</option>
+        <option value="postomat">Поштомат</option>
+    </select>
+
+    <label for="warehouse">Відділення/Поштомат:</label>
+    <select id="warehouse" name="warehouse" required>
+        <option value="">Оберіть відділення</option>
+    </select>
+
+    <button type="submit">Підтвердити</button>
+</form>
+<p id="status"></p>
+</body>
+</html>
